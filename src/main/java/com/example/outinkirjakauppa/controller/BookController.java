@@ -1,6 +1,7 @@
 package com.example.outinkirjakauppa.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.outinkirjakauppa.domain.Book;
 import com.example.outinkirjakauppa.domain.BookRepository;
@@ -30,6 +32,15 @@ public class BookController {
 	
 		return "booklist";
 	}
+	@RequestMapping(value="/books", method=RequestMethod.GET)
+	public @ResponseBody List<Book> listRest(){
+		return (List<Book>)repository.findAll();
+	}
+	@RequestMapping(value="/book/{id}", method=RequestMethod.GET)
+	public @ResponseBody Book findBookRest(@PathVariable("id") Long bookId){
+		return repository.findOne(bookId);
+	
+	}
 	
 	@RequestMapping("/add")
 	public String add(Model model){
@@ -47,5 +58,6 @@ public class BookController {
 		repository.delete(id);
 		return "redirect:../booklist";
 	}
+	
 	
 }
