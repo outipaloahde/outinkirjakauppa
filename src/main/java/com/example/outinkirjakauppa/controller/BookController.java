@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +21,21 @@ public class BookController {
 	@Autowired
 	private BookRepository repository;
 
-	
-	@RequestMapping("/index")
-	public String home(){
-		return "index";
-	}
-	
+    @RequestMapping(value={"/", "/home"})
+    public String homeSecure() {
+        return "home";
+    }
+
+    @RequestMapping(value="/hello")
+    public String helloSecure() {
+        return "hello";
+    }
+
+    @RequestMapping(value="/login")
+    public String login() {
+        return "login";
+    }
+
 	@RequestMapping("/booklist")
 	public String listofbooks(Model model){
 		model.addAttribute("list", repository.findAll());
@@ -53,6 +63,7 @@ public class BookController {
 		repository.save(book);
 		return "redirect:booklist";
 	}
+
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
 	public String delete(@PathVariable("id") Long id, Model model){
 		repository.delete(id);

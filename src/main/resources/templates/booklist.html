@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 </head>
 <body>
+<h3 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h3>
+
 
 
 <table class="table table-striped">
@@ -27,8 +29,11 @@
 		<td><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>    	
 	</tr>
 </table>
-<a class="btn btn-success" href="/add">Add Book</a>    	
+<a class="btn btn-success" href="/add">Add Book</a>
 
 
+<form th:action="@{/logout}" method="post">
+    <input class="btn btn-danger" type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>
